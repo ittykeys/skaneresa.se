@@ -1,0 +1,20 @@
+/*
+ * File: animations.css
+ * Author: Peter Nilsson (@ittykeys)
+ * Date: March 18, 2024
+ * License: © 2024 Peter Nilsson, released under the GPLv3 License. See LICENSE file for details.
+ * Description: Css file for animations
+ */
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+@keyframes moveToCenter {
+	from { margin-top: -45vh; }
+	to { margin-top: 0; }
+}
+@keyframes moveToTop {
+	from { margin-top: 0; }
+	to { margin-top: -45vh; }
+}

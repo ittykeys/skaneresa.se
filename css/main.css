@@ -1,0 +1,118 @@
+/*
+ * File: main.css
+ * Author: Peter Nilsson (@ittykeys)
+ * Date: March 18, 2024
+ * License: © 2024 Peter Nilsson, released under the GPLv3 License. See LICENSE file for details.
+ * Description: Main css file for site
+ */
+
+/* Import our css files */
+@import "animations.css";
+@import "search.css";
+@import "result.css";
+
+/* Reset browser global defaults and set our own */
+* {
+	font-family: "Trebuchet MS", "Verdana", "Geneva", "Arial", sans-serif;
+	font-weight: normal !important;
+	color: #ba0053;
+	background-color: #e5e2e2;
+	text-decoration: none;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+	letter-spacing: 0.1rem;
+	margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+/* I don't like scrollbars */
+} ::-webkit-scrollbar {
+	display: none;
+}
+/* Animate links */
+a:link, a:visited {
+	color: #ba0053;
+	transition: 0.2s;
+	} a:hover, a:focus {
+		color: #8a003e;
+}	a:active {
+		color: #61012c;
+}
+
+/* Flex body and style common elements */
+body {
+	display: flex;
+	height: 100vh;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	z-index: 2;
+} body.animate-to-top {
+	animation: moveToTop 0.5s forwards;
+} body.animate-to-center {
+	animation: moveToCenter 0.5s forwards;
+} h1 {
+	font-weight: normal;
+	padding: 0;
+	font-size: 4em;
+	text-align: center;
+} h2 {
+	padding: 1em;
+	font-size: 2em;
+	text-align: center;
+} p {
+	font-size: 2em;
+	text-align: center;
+}
+
+/* Loader animation */
+#loader {
+	position: absolute;
+	border: 5px solid #e5e2e2;
+	border-top: 5px solid #ba0053;
+	border-radius: 50%;
+	width: 3em;
+	height: 3em;
+	animation: spin 1s linear infinite;
+	z-index: 999;
+	background-color: #e5e2e200;
+}
+
+/* Main container */
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: all 0.5s ease;
+} .container.row-layout {
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+} .container.row-layout #main,
+.container.row-layout #search,
+.container.row-layout #buttons {
+	width: auto;
+	margin: 0 10px;
+}
+
+/* Contain main elements except results */
+#main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: flex-direction 0.5s ease, justify-content 0.5s ease;
+} #search, #buttons, #search input[type='text'], h1 {
+	transition: all 0.5s ease;
+} .row-layout #main {
+	flex-direction: row;
+	justify-content: space-around;
+	width: 100%;
+}
+
+/* Make sure any error is absolutely shown */
+#error {
+	position: absolute;
+	bottom: 0;
+}

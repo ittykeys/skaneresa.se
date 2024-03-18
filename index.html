@@ -1,0 +1,80 @@
+<!--
+    File: index_en.html
+    Author: Peter Nilsson (@ittykeys)
+    Date: March 18, 2024
+    License: © 2024 Peter Nilsson, released under the GPLv3 License. See LICENSE file for details.
+    Description: Main html, Swedish
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Skåneresa</title>
+        <script>
+            function generateNonce() {
+                var charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                var result = '';
+                for (var i = 0; i < 32; i++) {
+                    result += charset.charAt(Math.floor(Math.random() * charset.length));
+                }
+                return result;
+            }
+            var nonce = generateNonce();
+            var cspMeta = document.createElement('meta');
+            cspMeta.setAttribute('http-equiv', 'Content-Security-Policy');
+            cspMeta.setAttribute('content', "script-src 'nonce-" + nonce + "' www.googletagmanager.com 'self' code.jquery.com");
+            document.head.appendChild(cspMeta);
+            function setNonceForScripts(nonce) {
+                var scripts = document.querySelectorAll('script[nonce]');
+                for (var i = 0; i < scripts.length; i++) {
+                    scripts[i].setAttribute('nonce', nonce);
+                }
+            }
+            setNonceForScripts(nonce);
+        </script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Cache-control" content="public" />
+        <meta name="description" content="Skåneresa" />
+        <meta name="keywords" content="Skåneresa" />
+        <meta name="author" content="Peter Nilsson" />
+        <meta name="HandheldFriendly" content="true" />
+        <meta name="robots" content= "index, follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+        <meta name="theme-color" content="#ba0053">
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        <link rel="apple-touch-icon" href="icon.png"/>
+        <link rel="icon" href="icon.ico" type="image/x-icon" />
+        <link rel="manifest" href="manifest.json">
+        <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+        <div id="loader"></div>
+        <div class="container" id="content">
+            <div id="main">
+                <h1><a href="">Skåneresa</a></h1>
+                <div id="search">
+                    <input id="from" type="text" placeholder="Från"/>
+                    <input id="to" type="text" placeholder="Till"/>
+                    <div id="buttons">
+                        <input type="button" id="searchButton" value="Sök" />
+                        <input type="button" id="reset" value="Återställ" />
+                    </div>
+                </div>
+            </div>
+            <div id="result">
+                <table border="1" id="timeTableDeparture">
+                    <tr>
+                        <th scope="col">Avgång</th>
+                        <th scope="col">Destination(er)</th>
+                        <th scope="col">Operatör</th>
+                        <th scope="col">Spår</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="error"></div>
+        </div>
+    </body>
+</html>

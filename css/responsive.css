@@ -1,0 +1,71 @@
+/*
+ * File: responve.css
+ * Author: Peter Nilsson (@ittykeys)
+ * Date: March 18, 2024
+ * License: © 2024 Peter Nilsson, released under the GPLv3 License. See LICENSE file for details.
+ * Description: Css file for different devices
+ */
+
+/* Tall displays */
+@media (max-width: 75rem) {
+	a:link, a:visited {
+		color: #ba0053;
+	} a:hover, a:focus {
+		color: #ba0053;
+	} a:active {
+		color: #ba0053;	
+	} h1 {
+		font-size: 3.5em !important;
+	} .row-layout #main {
+		flex-direction: column;
+		justify-content: space-around;
+	} #result.shown {
+		width: 75%;
+	}
+}
+
+/* Mobile friendly, or at least trying :) */
+@media (max-width: 768px) {
+	a:link, a:visited {
+		color: #ba0053;
+	} a:hover, a:focus {
+		color: #ba0053;
+	} a:active {
+		color: #ba0053;	
+	} h1 {
+		font-size: 3.5em !important;
+	} .row-layout #main {
+		align-self: center;
+		align-items: center;
+		width: 50vw !important;
+		font-size: 0.9em;
+	} .row-layout #main h1 {
+		font-size: 2em;
+	} #result.shown {
+		max-height: 75%;
+		top: 62.5%;
+		width: 95%;
+		font-size: 0.7em;
+	} .row-layout #search {
+		font-size: 0.9em;
+	} #timeTableDeparture {
+		margin-bottom: 3em;
+	}
+	@keyframes moveToTop {
+		from { margin-top: 0; }
+		to { margin-top: -37vh; }
+	}
+	@keyframes moveToCenter {
+		from { margin-top: -37vh; }
+		to { margin-top: 0; }
+	}
+	#search {
+		justify-content: center;
+	} input[type='text'] {
+		min-width: 10em;
+	}
+	body {
+		height: 100vh !important;
+		overflow: hidden;
+	}
+}

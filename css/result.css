@@ -1,0 +1,53 @@
+/*
+ * File: result.css
+ * Author: Peter Nilsson (@ittykeys)
+ * Date: March 18, 2024
+ * License: © 2024 Peter Nilsson, released under the GPLv3 License. See LICENSE file for details.
+ * Description: Css file for results
+ */
+
+/* Result container */
+#result {
+    width: 0;
+	max-height: 0;
+    margin-top: 2em;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	transition: width 0.5s ease, max-height 0.5s ease, left 0.5s ease, top 0.5s ease;
+	position: absolute;
+	left: 0;
+    top: 0;
+	overflow: hidden;
+    transform: translate(-50%, -50%);
+	z-index: 3;
+} #result.shown {
+	width: 55%;
+	max-height: 80%;
+	left: 50%;
+    top: 50%;
+	overflow: scroll;
+}
+
+/* Results table */
+#timeTableDeparture {
+	border: 1px solid #ba0053;
+    border-spacing: 0px;
+	border-radius: 5px;
+    width: 100%;
+    font-size: 1.1em;
+} #timeTableDeparture th {
+    background-color: #ba0053;
+	border: none;
+    color: #fff;
+    padding: 0.6em 0.9em;
+	width: 7.5em !important;
+} th:not(:first-child) {
+	border-left: 1px solid #fff !important;
+} th:not(:last-child) {
+	border-right: 1px solid #fff !important;
+} #timeTableDeparture td {
+	padding: 0.2em 0.2em;
+    background-color: #fff;
+    color: #ba0053;
+    border: 1px solid #ba0053;
+    text-align: center;
+}
