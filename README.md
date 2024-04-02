@@ -11,7 +11,7 @@ Very beta, merely "proof of concept" stage. Only showing trains and departure ti
 Live version at [skaneresa.se](https://skaneresa.se)
 
 ## Configuration
-Create "config.json":
+Create "config.json" in web root:
 
 ```
 {
