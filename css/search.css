@@ -96,3 +96,37 @@
 } .ui-helper-hidden-accessible {
     display: none !important;
 }
+
+/* Style notification */
+.notification {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #fff;
+	padding: 1em;
+	border: 1px solid #ba0053;
+	border-radius: 5px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: top 0.5s ease-in-out;
+	display: none;
+} .notification.show {
+	display: block;
+	animation: slideDown 0.5s forwards;
+} .notification.hide {
+	animation: slideUp 0.5s forwards;
+} #notificationMessage {
+	background-color: #fff;
+    padding: 0.3em 0.6em;
+} #closeNotification {
+	background-color: #ba0053;
+	color: #fff;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 3px;
+	transition: background-color 0.2s;
+} #closeNotification:hover {
+	background-color: #8a003e;
+	transition: all 0.5s ease;
+}

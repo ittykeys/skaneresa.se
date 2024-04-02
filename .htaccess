@@ -29,8 +29,11 @@ Options -Includes
 RewriteEngine On
 RewriteCond %{HTTP:Accept-Language} ^sv [NC]
 RewriteRule ^$ /index.html [L]
+RewriteRule ^notification.js$ /js/notification_sv.js [L]
 RewriteCond %{HTTP:Accept-Language} ^en [NC]
 RewriteRule ^$ /index_en.html [L]
+RewriteRule ^notification.js$ /js/notification_en.js [L]
 
 # Fallback to default version
 RewriteRule ^$ /index.html [L]
+RewriteRule ^notification.js$ /js/notification_sv.js [L]

@@ -59,10 +59,25 @@
 		from { margin-top: -37vh; }
 		to { margin-top: 0; }
 	}
+	@keyframes slideDown {
+		0% { top: -25vh; }
+		100% { top: 10vh; }
+	}
+	@keyframes slideUp {
+		0% { top: 10vh; }
+		100% { top: -25vh; }
+	}
 	#search {
 		justify-content: center;
 	} input[type='text'] {
 		min-width: 10em;
+	}
+	.notification {
+		text-align: center;
+		min-width: 75%;
+		font-size: 0.8em;
+	} #closeNotification {
+		display: none;
 	}
 	body {
 		height: 100vh !important;

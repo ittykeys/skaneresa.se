@@ -18,3 +18,11 @@
 	from { margin-top: 0; }
 	to { margin-top: -45vh; }
 }
+@keyframes slideDown {
+	0% { top: -25vh; }
+	100% { top: 5vh; }
+}
+@keyframes slideUp {
+	0% { top: 5vh; }
+	100% { top: -25vh; }
+}

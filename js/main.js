@@ -6,27 +6,68 @@
  * Description: Main js file for site
  */
 
+// Fetch api key
+let apiKey;
+fetch('/config.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to fetch configuration file');
+        }
+        return response.json();
+    })
+    .then(config => {
+        if (!config || !config.apiKey) {
+            throw new Error('Invalid configuration file or missing API key');
+        }
+        apiKey = config.apiKey;
+        PreloadTrainStations();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
 // Wait for DOM
-document.addEventListener("DOMContentLoaded", function() {
-    // Handling search button
+document.addEventListener("DOMContentLoaded", function () {
+    // Handle search button
     var searchButton = document.getElementById("searchButton");
     if (searchButton) {
-        searchButton.addEventListener("click", function() {
-            Search();
+        searchButton.addEventListener("click", function (event) {
+            // Make sure fields are not empty and then search
+            var fromField = document.getElementById("from");
+            var toField = document.getElementById("to");
+            var notification = document.getElementById("notificationMessage");
+
+            if (fromField.value.trim() === "" || toField.value.trim() === "") {
+                // Show notification
+                notification.textContent = notificationText;
+                $('.notification').removeClass('hide').addClass('show');
+                setTimeout(function() {
+                    $('.notification').addClass('hide');
+                }, 3000);
+                event.preventDefault();
+            } else {
+                Search();
+            }
         });
-    } else {
-        console.error("Element with ID 'searchButton' not found.");
     }
+
+    // Close notification
+    document.getElementById("closeNotification").addEventListener("click", function(event) {
+        $('.notification').addClass('hide');
+        setTimeout(function() {
+            $('.notification').removeClass('show');
+        }, 500);
+    });
 
     // Handling reset button
     var reset = document.getElementById("reset");
     if (reset) {
-        reset.addEventListener("click", function() {
+        reset.addEventListener("click", function () {
             Reset();
         });
     } else {
         console.error("Element with ID 'reset' not found.");
-    }
+    }   
 });
 
 // Stations array
@@ -40,11 +81,11 @@ jQuery(document).ready(function ($) {
             url: "https://api.trafikinfo.trafikverket.se/v2/data.json",
             error: function (msg) {
                 if (msg.statusText == "abort") return;
-                document.getElementById("error").innerHTML=("Request failed: " + msg.statusText + "" + msg.responseText);
+                document.getElementById("error").innerHTML = ("Request failed: " + msg.statusText + "" + msg.responseText);
             }
         });
     }
-    catch (e) { document.getElementById("error").innerHTML=("An error occured when initializing."); }
+    catch (e) { document.getElementById("error").innerHTML = ("An error occured when initializing."); }
 
     // Ui stuff for preload
     var loadingTimer;
@@ -64,13 +105,12 @@ jQuery(document).ready(function ($) {
             $("#content").show();
         }, 200);
     });
-    PreloadTrainStations();
 });
 
 // Preload train stations
 function PreloadTrainStations() {
     var xmlRequest = "<REQUEST>" +
-        "<LOGIN authenticationkey='YOUR_API_KEY_HERE'/>" +
+        "<LOGIN authenticationkey='" + apiKey + "'/>" +
         "<QUERY objecttype='TrainStation' schemaversion='1'>" +
         "<FILTER>" +
         "<EQ name='CountyNo' value='12' />" +
@@ -130,7 +170,7 @@ function fillSearchWidget(data) {
             },
             messages: {
                 noResults: '',
-                results: function() {}
+                results: function () { }
             }
         });
     };
@@ -145,7 +185,7 @@ function Search() {
     $('#timeTableDeparture tr:not(:first)').remove();
     $('#loader').show();
     var xmlRequest = "<REQUEST>" +
-        "<LOGIN authenticationkey='YOUR_API_KEY_HERE' />" +
+        "<LOGIN authenticationkey='" + apiKey + "'/>" +
         "<QUERY objecttype='TrainAnnouncement' " +
         "orderby='AdvertisedTimeAtLocation' schemaversion='1'>" +
         "<FILTER>" +
@@ -165,7 +205,7 @@ function Search() {
         "<INCLUDE>ToLocation</INCLUDE>" +
         "</QUERY>" +
         "</REQUEST>";
-        
+
     $.ajax({
         type: "POST",
         contentType: "text/xml",
@@ -182,7 +222,7 @@ function Search() {
         error: function (msg) {
             $('#loader').hide();
             if (msg.statusText == "abort") return;
-            document.getElementById("error").innerHTML=("Request failed: " + msg.statusText + "" + msg.responseText);
+            document.getElementById("error").innerHTML = ("Request failed: " + msg.statusText + "" + msg.responseText);
         }
     });
     $('body').removeClass('animate-to-center');

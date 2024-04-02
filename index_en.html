@@ -48,6 +48,7 @@
         <link rel="manifest" href="manifest.json">
         <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="js/notification_en.js"></script>
         <script src="js/main.js"></script>
     </head>
     <body>
@@ -62,6 +63,10 @@
                         <input type="button" id="searchButton" value="Search" />
                         <input type="button" id="reset" value="Reset" />
                     </div>
+                </div>
+                <div id="Notification" class="notification">
+                    <span id="notificationMessage"></span>
+                    <button id="closeNotification">OK</button>
                 </div>
             </div>
             <div id="result">

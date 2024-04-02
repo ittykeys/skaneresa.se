@@ -10,6 +10,7 @@
 @import "animations.css";
 @import "search.css";
 @import "result.css";
+@import "responsive.css";
 
 /* Reset browser global defaults and set our own */
 * {
