@@ -39,6 +39,8 @@
 		align-items: center;
 		width: 50vw !important;
 		font-size: 0.9em;
+		flex-direction: column !important;
+		justify-content: space-around !important;
 	} .row-layout #main h1 {
 		font-size: 2em;
 	} #result.shown {
