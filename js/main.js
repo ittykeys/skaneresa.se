@@ -28,6 +28,12 @@ fetch('/config.json')
 
 // Wait for DOM
 document.addEventListener("DOMContentLoaded", function () {
+    // JS is not disabled, display things
+    var container = document.querySelector('.container');
+    if (container) {
+        container.classList.remove('hidden');
+    }
+    document.getElementById('loader').classList.remove('hidden');
     // Handle search button
     var searchButton = document.getElementById("searchButton");
     if (searchButton) {

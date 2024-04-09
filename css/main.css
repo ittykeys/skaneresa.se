@@ -39,6 +39,10 @@ a:link, a:visited {
 		color: #61012c;
 }
 
+.hidden {
+	display: none !important;
+}
+
 /* Flex body and style common elements */
 body {
 	display: flex;
