@@ -43,13 +43,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
         <meta name="theme-color" content="#ba0053">
         <link rel="stylesheet" type="text/css" href="css/main.css" />
-        <link rel="apple-touch-icon" href="icon.png"/>
-        <link rel="icon" href="icon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="img/icon.png"/>
+        <link rel="icon" href="img/icon.ico" type="image/x-icon" />
         <link rel="manifest" href="manifest.json">
         <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <script src="js/notification_en.js"></script>
         <script src="js/main.js"></script>
+        <script src="js/darkmode.js"></script>
     </head>
     <body>
         <noscript>
@@ -58,6 +59,11 @@
         <div id="loader" class="hidden"></div>
         <div class="container hidden" id="content">
             <div id="main">
+                <span class="darkModeIcon"></span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeSwitch">
+                    <span class="slider round"></span>
+                </label>
                 <h1><a href="">Skåneresa</a></h1>
                 <div id="search">
                     <input id="from" type="text" placeholder="From"/>

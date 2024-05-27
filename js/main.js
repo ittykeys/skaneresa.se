@@ -57,6 +57,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Focus on from field
+    setTimeout(function () {
+        document.getElementById('from').focus();
+    }, 500);
+
     // Close notification
     document.getElementById("closeNotification").addEventListener("click", function(event) {
         $('.notification').addClass('hide');
@@ -236,8 +241,16 @@ function Search() {
     $('.container').addClass('row-layout');
     $('#result').addClass('shown');
     $('#reset').show();
-    var menu = document.getElementById("filter");
-    menu.classList.remove("shown");
+
+    // Adjust height since results are absolutely positioned
+    setTimeout(function () {
+        var resultsizer = document.getElementById('result');
+        var elementRect = resultsizer.getBoundingClientRect();
+        var htmlElement = document.documentElement;
+        var htmlRect = htmlElement.getBoundingClientRect();
+        var newHeight = Math.max(htmlRect.height, elementRect.bottom);
+        htmlElement.style.height = newHeight + 'px';
+    }, 100);
 }
 
 // Render train announcements
@@ -274,6 +287,7 @@ function Reset() {
     $('.container').removeClass('row-layout');
     $('body').addClass('animate-to-center');
     $('#reset').hide();
-    var menu = document.getElementById("filter");
-    menu.classList.remove("shown");
+    setTimeout(function () {
+        document.getElementById('from').focus();
+    }, 500);
 }

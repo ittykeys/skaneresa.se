@@ -1,0 +1,121 @@
+/*
+ * File: darkmode.css
+ * Author: Peter Nilsson (@ittykeys)
+ * Date: May 27, 2024
+ * License: © 2024 Peter Nilsson, released under the GPLv3 License. See LICENSE file for details.
+ * Description: Darkmode css file for site
+ */
+
+
+/* Dark mode global */
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+.dark-mode * {
+    color: #d42574;
+    background-color: #121212;
+}
+.dark-mode a:link, a:visited {
+	color: #d42574;
+	transition: color 0.2s;
+	} .dark-mode a:hover, a:focus {
+		color: #8a003e;
+}	.dark-mode a:active {
+		color: #61012c;
+}
+
+/* Dark mode input elements */
+.dark-mode input[type='text'] {
+    background-color: #121212;
+    color: #e0e0e0;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+} .dark-mode ::placeholder {
+    color: #e0e0e0;
+} input[type='text']:focus, textarea:focus, select:focus {
+    border: 1px solid #424242;
+    box-shadow: 0 0 5px #b63f7475;
+}
+
+/* Dark mode autocomplete */
+.dark-mode .ui-autocomplete {
+    background-color: #121212;
+    border: 1px solid #ba0053;
+    color: #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+} .dark-mode .ui-front, .dark-mode .ui-menu, .dark-mode .ui-widget, .dark-mode .ui-widget-content, .dark-mode .ui-corner-all {
+	background-color: #121212 !important;
+    color: #e0e0e0;
+} .dark-mode .ui-autocomplete .ui-menu-item {
+	background-color: #121212;
+    color: #e0e0e0;
+} .dark-mode .ui-autocomplete .ui-menu-item:hover {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Dark mode notification */
+.dark-mode #notificationMessage {
+    color: #e0e0e0;
+    background-color: #121212;
+}
+
+/* Dark mode time table */
+.dark-mode #timeTableDeparture td {
+    color: #e0e0e0;
+    background-color: #121212;
+}
+
+/* Dark mode switch */
+.darkModeIcon {
+    background-image: url('../img/sun.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-right: 3em;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    width: 3em;
+    height: 1.7em;
+    background-color: #00000000;
+}
+.dark-mode .darkModeIcon {
+    background-image: url('../img/moon.png');
+}
+.switch {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    width: 3em;
+    height: 1.7em;
+    background-color: #00000000;
+} .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+} .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 1.7em;
+} .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.3em;
+    width: 1.3em;
+    left: 0.2em;
+    bottom: 0.2em;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+} input:checked + .slider {
+    background-color: #699fda;
+} input:checked + .slider:before {
+    transform: translateX(1.3em);
+}

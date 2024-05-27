@@ -11,6 +11,7 @@
 @import "search.css";
 @import "result.css";
 @import "responsive.css";
+@import "darkmode.css";
 
 /* Reset browser global defaults and set our own */
 * {
@@ -32,7 +33,7 @@
 /* Animate links */
 a:link, a:visited {
 	color: #ba0053;
-	transition: 0.2s;
+	transition: color 0.2s;
 	} a:hover, a:focus {
 		color: #8a003e;
 }	a:active {
@@ -53,6 +54,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	z-index: 2;
+	overflow-y: visible;
 } body.animate-to-top {
 	animation: moveToTop 0.5s forwards;
 } body.animate-to-center {
@@ -109,7 +111,7 @@ body {
 	align-items: center;
 	transition: flex-direction 0.5s ease, justify-content 0.5s ease;
 } #search, #buttons, #search input[type='text'], h1 {
-	transition: all 0.5s ease;
+	transition: flex-direction 0.5s ease, justify-content 0.5s ease;
 } .row-layout #main {
 	flex-direction: row;
 	justify-content: space-around;

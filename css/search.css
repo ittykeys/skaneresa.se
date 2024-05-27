@@ -85,7 +85,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	justify-self: center;
 } .ui-front, .ui-menu, .ui-widget, .ui-widget-content, .ui-corner-all {
-	background-color: #fff;
+	background-color: #fff !important;
 } .ui-autocomplete .ui-menu-item {
 	background-color: #fff;
     padding: 0.3em 0.6em;
