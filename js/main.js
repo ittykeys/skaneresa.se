@@ -326,9 +326,13 @@ function renderTrainAnnouncement(departures, arrivals) {
 $(document).on('click', 'a.deviation', function(e) {
     e.preventDefault();
     var deviationContent = $(this).data('deviation');
-    $('#deviationModalBody').text(deviationContent);
-    $('#deviationOverlay').show();
-    $('#deviationModal').removeClass('hide').addClass('show');
+    if (deviationContent === "") {
+        return;
+    } else {
+        $('#deviationModalBody').text(deviationContent);
+        $('#deviationOverlay').show();
+        $('#deviationModal').removeClass('hide').addClass('show');
+    }
 });
 $(document).on('click', '#deviationOverlay', function(e) {
     $(this).hide();

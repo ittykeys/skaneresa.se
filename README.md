@@ -6,7 +6,7 @@ skaneresa.se is an attempt to improve the existing Reseplaneraren by Skånetrafi
 Re-implement missing features from the old Reseplaneraren.
 (Used to be accessible at https://reseplaneraren.skanetrafiken.se , but that now redirects to the new bad one)
 
-Very beta, merely "proof of concept" stage. Only showing trains and departure times at the moment.
+Very beta, merely "proof of concept" stage. Only showing trains at the moment. Deviations only in Swedish.
 
 Live version at [skaneresa.se](https://skaneresa.se)
 
