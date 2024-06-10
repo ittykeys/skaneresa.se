@@ -7,3 +7,5 @@
  */
 
 var notificationText = "Både från och till-fält krävs";
+var noAnnouncements= "Inga annonseringar hittades";
+var noDepartures = "Inga avgångar hittades";

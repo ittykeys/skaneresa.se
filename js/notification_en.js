@@ -7,3 +7,5 @@
  */
 
 var notificationText = "Both from and to fields are required";
+var noAnnouncements= "No train announcements found";
+var noDepartures = "No departures found";

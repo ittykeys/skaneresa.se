@@ -66,6 +66,15 @@
     background-color: #121212;
 }
 
+/* Dark mode deviation modal */
+.dark-mode #deviationModal {
+    background-color: #121212;
+}
+.dark-mode #deviationModalBody {
+    color: #e0e0e0;
+    background-color: #121212;
+}
+
 /* Dark mode switch */
 .darkModeIcon {
     background-image: url('../img/sun.png');

@@ -122,14 +122,14 @@ jQuery(document).ready(function ($) {
 function PreloadTrainStations() {
     var xmlRequest = "<REQUEST>" +
         "<LOGIN authenticationkey='" + apiKey + "'/>" +
-        "<QUERY objecttype='TrainStation' schemaversion='1'>" +
-        "<FILTER>" +
-        "<EQ name='CountyNo' value='12' />" +
-        "</FILTER>" +
-        "<INCLUDE>Prognosticated</INCLUDE>" +
-        "<INCLUDE>AdvertisedLocationName</INCLUDE>" +
-        "<INCLUDE>LocationSignature</INCLUDE>" +
-        "</QUERY>" +
+            "<QUERY objecttype='TrainStation' schemaversion='1'>" +
+                "<FILTER>" +
+                    "<EQ name='CountyNo' value='12' />" +
+                "</FILTER>" +
+                "<INCLUDE>Prognosticated</INCLUDE>" +
+                "<INCLUDE>AdvertisedLocationName</INCLUDE>" +
+                "<INCLUDE>LocationSignature</INCLUDE>" +
+            "</QUERY>" +
         "</REQUEST>";
     $.ajax({
         type: "POST",
@@ -188,7 +188,6 @@ function fillSearchWidget(data) {
     autocompleteSetup("#from");
     autocompleteSetup("#to");
 }
-
 // Perform search
 function Search() {
     var fromSign = $("#from").data("sign");
@@ -197,24 +196,43 @@ function Search() {
     $('#loader').show();
     var xmlRequest = "<REQUEST>" +
         "<LOGIN authenticationkey='" + apiKey + "'/>" +
-        "<QUERY objecttype='TrainAnnouncement' " +
-        "orderby='AdvertisedTimeAtLocation' schemaversion='1'>" +
-        "<FILTER>" +
-        "<AND>" +
-        "<GT name='AdvertisedTimeAtLocation' value='$dateadd(-00:15:00)' />" +
-        "<LT name='AdvertisedTimeAtLocation' value='$dateadd(14:00:00)' />" +
-        "<EQ name='LocationSignature' value='" + fromSign + "' />" +
-        "<EQ name='ActivityType' value='Avgang' />" +
-        "<IN name='ToLocation' value='" + toSign + "' />" +
-        "</AND>" +
-        "<NOT><EQ name='InformationOwner' value='SJ' /></NOT>" +
-        "</FILTER>" +
-        "<INCLUDE>InformationOwner</INCLUDE>" +
-        "<INCLUDE>AdvertisedTimeAtLocation</INCLUDE>" +
-        "<INCLUDE>TrackAtLocation</INCLUDE>" +
-        "<INCLUDE>FromLocation</INCLUDE>" +
-        "<INCLUDE>ToLocation</INCLUDE>" +
-        "</QUERY>" +
+            "<QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1'>" +
+                "<FILTER>" +
+                    "<AND>" +
+                        "<GT name='AdvertisedTimeAtLocation' value='$dateadd(-00:15:00)' />" +
+                        "<LT name='AdvertisedTimeAtLocation' value='$dateadd(14:00:00)' />" +
+                        "<EQ name='LocationSignature' value='" + fromSign + "' />" +
+                        "<EQ name='ActivityType' value='Avgang' />" +
+                        "<IN name='ToLocation' value='" + toSign + "' />" +
+                    "</AND>" +
+                "<NOT>"+ 
+                    "<EQ name='InformationOwner' value='SJ' />" +
+                "</NOT>" +
+                "</FILTER>" +
+                "<INCLUDE>InformationOwner</INCLUDE>" +
+                "<INCLUDE>AdvertisedTimeAtLocation</INCLUDE>" +
+                "<INCLUDE>TrackAtLocation</INCLUDE>" +
+                "<INCLUDE>Deviation</INCLUDE>" +
+                "<INCLUDE>OtherInformation</INCLUDE>" +
+                "<INCLUDE>AdvertisedTrainIdent</INCLUDE>" +
+            "</QUERY>" +
+            "<QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1'>" +
+                "<FILTER>" +
+                    "<AND>" +
+                        "<GT name='AdvertisedTimeAtLocation' value='$now' />" +
+                        "<LT name='AdvertisedTimeAtLocation' value='$dateadd(16:00:00)' />" +
+                        "<EQ name='LocationSignature' value='" + toSign + "' />" +
+                        "<EQ name='ActivityType' value='Avgang' />" +
+                        "<IN name='FromLocation' value='" + fromSign + "' />" +
+                    "</AND>" +
+                "<NOT>"+ 
+                    "<EQ name='InformationOwner' value='SJ' />" +
+                "</NOT>" +
+                "</FILTER>" +
+                "<INCLUDE>AdvertisedTimeAtLocation</INCLUDE>" +
+                "<INCLUDE>TrackAtLocation</INCLUDE>" +
+                "<INCLUDE>AdvertisedTrainIdent</INCLUDE>" +
+            "</QUERY>" +
         "</REQUEST>";
 
     $.ajax({
@@ -222,18 +240,20 @@ function Search() {
         contentType: "text/xml",
         dataType: "json",
         data: xmlRequest,
-        success: function (response) {
+        success: function(response) {
             $('#loader').hide();
-            if (response == null || response.RESPONSE.RESULT[0].TrainAnnouncement == null) {
-                $("#result").after("");
+            if (response == null || response.RESPONSE.RESULT == null) {
+                $("#result").after("<p>" + noAnnouncements + "</p>");
                 return;
             }
-            renderTrainAnnouncement(response.RESPONSE.RESULT[0].TrainAnnouncement);
+            var departures = response.RESPONSE.RESULT[0].TrainAnnouncement || [];
+            var arrivals = response.RESPONSE.RESULT[1].TrainAnnouncement || [];
+            renderTrainAnnouncement(departures, arrivals);
         },
-        error: function (msg) {
+        error: function(msg) {
             $('#loader').hide();
             if (msg.statusText == "abort") return;
-            document.getElementById("error").innerHTML = ("Request failed: " + msg.statusText + "" + msg.responseText);
+            document.getElementById("error").innerHTML = ("Request failed: " + msg.statusText + " " + msg.responseText);
         }
     });
     $('body').removeClass('animate-to-center');
@@ -254,24 +274,76 @@ function Search() {
 }
 
 // Render train announcements
-function renderTrainAnnouncement(announcement) {
-    $(announcement).each(function (iterator, item) {
-        var advertisedtime = new Date(item.AdvertisedTimeAtLocation);
-        var hours = advertisedtime.getHours()
-        var minutes = advertisedtime.getMinutes()
-        if (minutes < 10) minutes = "0" + minutes
-        var toList = new Array();
-        $(item.ToLocation).each(function (iterator, toItem) {
-            toList.push(Stations[toItem]);
-        });
-        var owner = "";
-        if (item.InformationOwner != null) owner = item.InformationOwner;
-        jQuery("#timeTableDeparture tr:last").
-            after("<tr><td>" + hours + ":" + minutes + "</td><td>" + toList.join(', ') +
-                "</td><td>" + owner + "</td><td style='text-align: center'>" + item.TrackAtLocation +
-                "</td></tr>");
+function renderTrainAnnouncement(departures, arrivals) {
+    if (departures.length === 0) {
+        jQuery("#timeTableDeparture").append("<tr><td colspan='5'>" + noDepartures + "</td></tr>");
+        return;
+    }
+    // Create a map to store arrival times and tracks based on AdvertisedTrainIdent
+    var arrivalMap = {};
+    arrivals.forEach(function(arrival) {
+        arrivalMap[arrival.AdvertisedTrainIdent] = {
+            time: new Date(arrival.AdvertisedTimeAtLocation),
+            track: arrival.TrackAtLocation
+        };
+    });
+    // Iterate over departures and find matching arrival time
+    departures.forEach(function(departure) {
+        var departureTime = new Date(departure.AdvertisedTimeAtLocation);
+        var depHours = departureTime.getHours();
+        var depMinutes = departureTime.getMinutes();
+        if (depMinutes < 10) depMinutes = "0" + depMinutes;
+        var owner = departure.InformationOwner || "";
+        if (owner === "Skånetrafiken") {
+            owner = "Pågatåg"; // Make more sense
+        }
+        var advertisedTrainIdent = departure.AdvertisedTrainIdent;
+        var arrivalTime = "N/A";
+        var arrivalTrack = "";
+        // Check if there is a matching arrival time for this departure
+        var arrivalData = arrivalMap[advertisedTrainIdent];
+        if (arrivalData) {
+            var arrival = arrivalData.time;
+            arrival.setMinutes(arrival.getMinutes() - 2); // Subtract Trafikverkets 2 minutes of margin
+            var arrHours = arrival.getHours();
+            var arrMinutes = arrival.getMinutes();
+            if (arrMinutes < 10) arrMinutes = "0" + arrMinutes;
+            arrivalTime = arrHours + ":" + arrMinutes;
+            arrivalTrack = arrivalData.track || "";
+        }
+        // Append the rows to the table
+        jQuery("#timeTableDeparture tr:last").after(
+            "<tr><td>" + depHours + ":" + depMinutes + ", " + (departure.TrackAtLocation || "") + 
+            "</td><td>" + arrivalTime + ", " + arrivalTrack +
+            "</td><td>" + owner +
+            "</td><td><a class='deviation' href='#' data-deviation='" + (departure.OtherInformation || "") +
+            "'>" + (departure.Deviation || "") + "</a></tr>"
+        );
     });
 }
+
+// Deviation modal
+$(document).on('click', 'a.deviation', function(e) {
+    e.preventDefault();
+    var deviationContent = $(this).data('deviation');
+    $('#deviationModalBody').text(deviationContent);
+    $('#deviationOverlay').show();
+    $('#deviationModal').removeClass('hide').addClass('show');
+});
+$(document).on('click', '#deviationOverlay', function(e) {
+    $(this).hide();
+    $('#deviationModal').addClass('hide');
+    setTimeout(function() {
+        $('#deviationModal').removeClass('show');
+    }, 300);
+});
+$(document).on('click', '#closeModal', function(e) {
+    $('#deviationOverlay').hide();
+    $('#deviationModal').addClass('hide');
+    setTimeout(function() {
+        $('#deviationModal').removeClass('show');
+    }, 300);
+});
 
 // Toggle filter menu
 function Filter() {

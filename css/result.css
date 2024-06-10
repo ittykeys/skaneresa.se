@@ -50,4 +50,6 @@
     color: #ba0053;
     border: 1px solid #ba0053;
     text-align: center;
+} #timeTableDeparture a {
+	background-color: transparent;
 }

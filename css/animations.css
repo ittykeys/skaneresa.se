@@ -26,3 +26,11 @@
 	0% { top: 5vh; }
 	100% { top: -25vh; }
 }
+@keyframes slideDownM {
+	0% { top: -5vh; }
+	100% { top: 50vh; }
+}
+@keyframes slideUpM {
+	0% { top: 50vh; }
+	100% { top: -5vh; }
+}
