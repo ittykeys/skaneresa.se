@@ -1,4 +1,11 @@
-// When the DOM content is loaded, execute this function
+/*
+ * File: darkmode.js
+ * Author: Peter Nilsson (@ittykeys)
+ * Date: May 28, 2024
+ * License: © 2024 Peter Nilsson, released under the GPLv3 License. See LICENSE file for details.
+ * Description: Darkmode js file for site
+ */
+
 document.addEventListener("DOMContentLoaded", function() {
     // Get the dark mode switch element by its ID
     const darkModeSwitch = document.getElementById('darkModeSwitch');
