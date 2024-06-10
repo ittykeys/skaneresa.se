@@ -81,6 +81,9 @@
 	} #closeNotification {
 		display: none;
 	}
+	#closeModal {
+		display: none;
+	}
 	body {
 		height: 100vh !important;
 		overflow: hidden;
