@@ -1,5 +1,7 @@
 # skaneresa.se
 
+![skaneresa logo](https://skaneresa.se/img/icon.png)
+
 ## Description
 
 skaneresa.se is an attempt to improve the existing Reseplaneraren by Skånetrafiken.
