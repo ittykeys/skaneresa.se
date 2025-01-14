@@ -7,6 +7,7 @@
  */
 
 // Fetch api key
+let language;
 let apiKey;
 fetch('/config.json')
     .then(response => {
@@ -28,6 +29,7 @@ fetch('/config.json')
 
 // Wait for DOM
 document.addEventListener("DOMContentLoaded", function () {
+    language = document.documentElement.lang;
     // JS is not disabled, display things
     var container = document.querySelector('.container');
     if (container) {
@@ -78,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     } else {
         console.error("Element with ID 'reset' not found.");
-    }   
+    }
 });
 
 // Stations array
@@ -205,7 +207,7 @@ function Search() {
                         "<EQ name='ActivityType' value='Avgang' />" +
                         "<IN name='ToLocation' value='" + toSign + "' />" +
                     "</AND>" +
-                "<NOT>"+ 
+                "<NOT>"+
                     "<EQ name='InformationOwner' value='SJ' />" +
                 "</NOT>" +
                 "</FILTER>" +
@@ -225,7 +227,7 @@ function Search() {
                         "<EQ name='ActivityType' value='Avgang' />" +
                         "<IN name='FromLocation' value='" + fromSign + "' />" +
                     "</AND>" +
-                "<NOT>"+ 
+                "<NOT>"+
                     "<EQ name='InformationOwner' value='SJ' />" +
                 "</NOT>" +
                 "</FILTER>" +
@@ -304,7 +306,7 @@ function renderTrainAnnouncement(departures, arrivals) {
         var arrivalData = arrivalMap[advertisedTrainIdent];
         if (arrivalData) {
             var arrival = arrivalData.time;
-            arrival.setMinutes(arrival.getMinutes() - 2); // Subtract Trafikverkets 2 minutes of margin
+            arrival.setMinutes(arrival.getMinutes() - 2); // Subtract Trafikverkets 2 minutes of margin (actually this is probably diff: arr - dep)
             var arrHours = arrival.getHours();
             var arrMinutes = arrival.getMinutes();
             if (arrMinutes < 10) arrMinutes = "0" + arrMinutes;
@@ -312,9 +314,11 @@ function renderTrainAnnouncement(departures, arrivals) {
             arrivalTrack = arrivalData.track || "";
         }
         // Append the rows to the table
+        var timeSuffixDep = (language === "en") ? ((depHours < 12) ? " AM" : " PM") : "";
+        var timeSuffixArr = (language === "en") ? ((arrHours < 12) ? " AM" : " PM") : "";
         jQuery("#timeTableDeparture tr:last").after(
-            "<tr><td>" + depHours + ":" + depMinutes + ", " + (departure.TrackAtLocation || "") + 
-            "</td><td>" + arrivalTime + ", " + arrivalTrack +
+            "<tr><td>" + depHours + ":" + depMinutes + timeSuffixDep + ", " + (departure.TrackAtLocation || "") +
+            "</td><td>" + arrivalTime + timeSuffixArr + ", " + arrivalTrack +
             "</td><td>" + owner +
             "</td><td><a class='deviation' href='#' data-deviation='" + (departure.OtherInformation || "") +
             "'>" + (departure.Deviation || "") + "</a></tr>"
