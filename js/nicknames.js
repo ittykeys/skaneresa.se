@@ -11,4 +11,5 @@ let nicknames = {
     Mlm: "Malmö",
     Hbg: "Helsingborg",
     LA: "Landskrona",
+    Huvudstaden: "Furulund",
 };
