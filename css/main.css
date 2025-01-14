@@ -171,3 +171,23 @@ body {
 	position: absolute;
 	bottom: 0;
 }
+
+#github {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 1em;
+	background-image: url('../img/github_dark.svg');
+	background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+	width: 2.5em;
+	height: 2.5em;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: all 0.2s ease;
+} #github:hover {
+	background-color: #ba0053;
+} #github:active {
+	background-color: #8a003e;
+}
