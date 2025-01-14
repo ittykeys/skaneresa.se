@@ -160,12 +160,22 @@ function fillSearchWidget(data) {
         $(selector).val("");
         $(selector).autocomplete({
             source: function (request, response) {
+                let term = request.term.toLowerCase();
+                // Check for a match in nicknames (case-insensitive)
+                let normalizedNicknames = Object.keys(nicknames).reduce((acc, key) => {
+                    acc[key.toLowerCase()] = nicknames[key];
+                    return acc;
+                }, {});
+                if (normalizedNicknames[term]) {
+                    term = normalizedNicknames[term];
+                }
+                // Perform the normal autocomplete matching
                 var matches = $.map(data, function (tag) {
-                    if (tag.label.toUpperCase().indexOf(request.term.toUpperCase()) === 0) {
+                    if (tag.label.toUpperCase().indexOf(term.toUpperCase()) === 0) {
                         return {
                             label: tag.label,
                             value: tag.value
-                        }
+                        };
                     }
                 });
                 response(matches);
