@@ -34,6 +34,10 @@ RewriteCond %{HTTP:Accept-Language} ^en [NC]
 RewriteRule ^$ /index_en.html [L]
 RewriteRule ^notification.js$ /js/notification_en.js [L]
 
+# And have a manual switch
+RewriteRule ^sv$ /index.html [L]
+RewriteRule ^en$ /index_en.html [L]
+
 # Fallback to default version
 RewriteRule ^$ /index.html [L]
 RewriteRule ^notification.js$ /js/notification_sv.js [L]

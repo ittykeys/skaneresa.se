@@ -191,3 +191,14 @@ body {
 } #github:active {
 	background-color: #8a003e;
 }
+
+#langswitch {
+	position: absolute;
+	top: 0;
+	width: 3em;
+	left: 0;
+	margin: 1em;
+	transition: filter 0.2s;
+} #langswitch:hover {
+	filter: saturate(500%);
+}
