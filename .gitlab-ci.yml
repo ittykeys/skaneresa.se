@@ -8,6 +8,5 @@ deploy_job:
       ssh -i ~/.ssh/runner $webserver "
         rm -f $wwwpath/skaneresa.se/README.md
         rm -f $wwwpath/skaneresa.se/LICENSE
-        rm -f $wwwpath/skaneresa.se/.gitignore
         cat $wwwpath/configs/skaneresa.se > $wwwpath/skaneresa.se/config.json
       "
