@@ -1,0 +1,5 @@
+<!DOCTYPE txt>
+Contact: mailto:contact@helsingborgproductions.com
+Contact: mailto:systems@helsingborgproductions.com
+Preferred-Languages: en, se
+Canonical: https://skaneresa.se/.well-known/security.txt

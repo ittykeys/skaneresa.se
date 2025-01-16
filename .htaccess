@@ -41,3 +41,9 @@ RewriteRule ^en$ /index_en.html [L]
 # Fallback to default version
 RewriteRule ^$ /index.html [L]
 RewriteRule ^notification.js$ /js/notification_sv.js [L]
+
+#And block access to config.json
+<Files "config.json">
+  Order Allow,Deny
+  Deny from all
+</Files>

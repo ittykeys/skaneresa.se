@@ -1,0 +1,12 @@
+stages:
+  - deploy
+deploy_job:
+  stage: deploy
+  script:
+    - |
+      rsync -az -e "ssh -i ~/.ssh/runner" --exclude=".git/" --exclude=".gitlab-ci.yml" --delete ./ $webserver:$wwwpath/skaneresa.se
+      ssh -i ~/.ssh/runner $webserver "
+        rm -f $wwwpath/skaneresa.se/README.md
+        rm -f $wwwpath/skaneresa.se/LICENSE
+        rm -f $wwwpath/skaneresa.se/.gitignore
+      "
