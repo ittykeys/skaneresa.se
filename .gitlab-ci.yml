@@ -9,4 +9,5 @@ deploy_job:
         rm -f $wwwpath/skaneresa.se/README.md
         rm -f $wwwpath/skaneresa.se/LICENSE
         rm -f $wwwpath/skaneresa.se/.gitignore
+        cat $wwwpath/config/skaneresa.se > $wwwpath/skaneresa.se/config.json
       "

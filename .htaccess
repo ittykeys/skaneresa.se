@@ -44,6 +44,9 @@ RewriteRule ^notification.js$ /js/notification_sv.js [L]
 
 #And block access to config.json
 <Files "config.json">
-  Order Allow,Deny
-  Deny from all
+    RewriteEngine On
+    RewriteCond %{HTTP_REFERER} !^$
+    RewriteCond %{HTTP_REFERER} ^https?://([a-z0-9-]+\.)?skaneresa\.se [NC]
+    RewriteRule ^ - [L]
+    RewriteRule ^ - [F,L]
 </Files>
