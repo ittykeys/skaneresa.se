@@ -45,9 +45,16 @@
 } #switcheroo {
 	position: absolute;
 	margin-left: 20rem;
-	top: 49vh;
+	top: 50vh;
 	font-size: 2em;
 	transition: all 0.2s;
+	background-color: #ba0053;
+	color: #fff;
+	border-radius: 5px;
+	font-family: "sans";
+	font-weight: bolder !important;
+	height: 1em;
+	line-height: 1;
 } #switcheroo:hover {
 	cursor: pointer;
 	opacity: 0.5;
