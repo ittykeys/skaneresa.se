@@ -30,7 +30,7 @@
 	border-radius: 5px;
 	transition: border-color 0.2s;
 	width: calc(100% - 1em);
-	background-color: #fff; 
+	background-color: #fff;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	transition: width 0.5s forwards;
 	min-width: 12.5em !important;
@@ -42,6 +42,19 @@
 } input[type='text']:focus, textarea:focus, select:focus {
     border: 1px solid #ccc;
     box-shadow: 0 0 5px #ba005475;
+} #switcheroo {
+	position: absolute;
+	margin-left: 20rem;
+	top: 49vh;
+	font-size: 2em;
+	transition: all 0.2s;
+} #switcheroo:hover {
+	cursor: pointer;
+	opacity: 0.5;
+} #switcheroo.row {
+	transform: rotate(90deg);
+	top: 8.5vh;
+	margin-left: 16rem;
 } #buttons {
 	margin-top: 3em;
     display: flex;

@@ -273,6 +273,7 @@ function Search() {
     $('.container').addClass('row-layout');
     $('#result').addClass('shown');
     $('#reset').show();
+    $('#switcheroo').addClass('row');
 
     // Adjust height since results are absolutely positioned
     setTimeout(function () {
@@ -363,6 +364,19 @@ $(document).on('click', '#closeModal', function(e) {
     }, 300);
 });
 
+// Switcheroo
+$(document).on('click', '#switcheroo', function(e) {
+    var fromVal = $('#from').val();
+    var toVal = $('#to').val();
+    $('#from').val(toVal);
+    $('#to').val(fromVal);
+    var fromSign = $('#from').data('sign');
+    var toSign = $('#to').data('sign');
+    $('#from').data('sign', toSign);
+    $('#to').data('sign', fromSign);
+});
+
+
 // Toggle filter menu
 function Filter() {
     var menu = document.getElementById("filter");
@@ -377,6 +391,7 @@ function Reset() {
     $('.container').removeClass('row-layout');
     $('body').addClass('animate-to-center');
     $('#reset').hide();
+    $('#switcheroo').removeClass('row');
     setTimeout(function () {
         document.getElementById('from').focus();
     }, 500);

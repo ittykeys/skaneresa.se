@@ -7,13 +7,13 @@
  */
 
 /* Tall displays */
-@media (max-width: 75rem) {
+@media only screen and (orientation: portrait) and (min-height: 600px) {
 	a:link, a:visited {
 		color: #ba0053;
 	} a:hover, a:focus {
 		color: #ba0053;
 	} a:active {
-		color: #ba0053;	
+		color: #ba0053;
 	} h1 {
 		font-size: 3.5em !important;
 	} .row-layout #main {
@@ -21,6 +21,11 @@
 		justify-content: space-around;
 	} #result.shown {
 		width: 75%;
+	}
+	#switcheroo.row {
+		transform: rotate(90deg);
+		top: 6vh;
+		margin-left: 20rem;
 	}
 }
 
@@ -31,7 +36,7 @@
 	} a:hover, a:focus {
 		color: #ba0053;
 	} a:active {
-		color: #ba0053;	
+		color: #ba0053;
 	} h1 {
 		font-size: 3.5em !important;
 	} .row-layout #main {
@@ -92,5 +97,11 @@
 		transform: scale(0.75);
 	} .darkModeIcon {
 		margin-right: 2.5em !important;
+	}
+	#switcheroo.row {
+		transform: none;
+		align-self: end;
+		top: 12.5vh;
+		margin-left: 20rem;
 	}
 }
