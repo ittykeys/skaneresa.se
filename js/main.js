@@ -204,6 +204,7 @@ function fillSearchWidget(data) {
 function Search() {
     var fromSign = $("#from").data("sign");
     var toSign = $("#to").data("sign");
+    console.log(toSign);
     $('#timeTableDeparture tr:not(:first)').remove();
     $('#loader').show();
     var xmlRequest = "<REQUEST>" +
@@ -234,8 +235,7 @@ function Search() {
                         "<GT name='AdvertisedTimeAtLocation' value='$now' />" +
                         "<LT name='AdvertisedTimeAtLocation' value='$dateadd(16:00:00)' />" +
                         "<EQ name='LocationSignature' value='" + toSign + "' />" +
-                        "<EQ name='ActivityType' value='Avgang' />" +
-                        "<IN name='FromLocation' value='" + fromSign + "' />" +
+                        "<EQ name='ActivityType' value='Ankomst' />" +
                     "</AND>" +
                 "<NOT>"+
                     "<EQ name='InformationOwner' value='SJ' />" +
@@ -311,27 +311,35 @@ function renderTrainAnnouncement(departures, arrivals) {
             owner = "Pågatåg"; // Make more sense
         }
         var advertisedTrainIdent = departure.AdvertisedTrainIdent;
-        var arrivalTime = "N/A";
-        var arrivalTrack = "";
+        var arrHours = 'N';
+        var arrMinutes = 'N';
+        var arrTrack = 'N';
         // Check if there is a matching arrival time for this departure
-        var arrivalData = arrivalMap[advertisedTrainIdent];
-        if (arrivalData) {
-            var arrival = arrivalData.time;
-            arrival.setMinutes(arrival.getMinutes() - 2); // Subtract Trafikverkets 2 minutes of margin (actually this is probably diff: arr - dep)
-            var arrHours = arrival.getHours();
-            var arrMinutes = arrival.getMinutes();
+        var arrival = arrivalMap[advertisedTrainIdent];
+        if (arrival) {
+            var arrivalTime = arrival.time;
+            arrHours = arrivalTime.getHours();
+            arrMinutes = arrivalTime.getMinutes();
+            arrTrack = arrival.track;
             if (arrMinutes < 10) arrMinutes = "0" + arrMinutes;
-            arrivalTime = arrHours + ":" + arrMinutes;
-            arrivalTrack = arrivalData.track || "";
         }
-        // Append the rows to the table
         var timeSuffixDep = (language === "en") ? ((depHours < 12) ? " AM" : " PM") : "";
         var timeSuffixArr = (language === "en") ? ((arrHours < 12) ? " AM" : " PM") : "";
+        // Delays
+        var delayText = "";
+        if (departure.EstimatedTimeIsPreliminary) {
+            var estimatedDepTime = new Date(departure.EstimatedTimeAtLocation);
+            var delayMinutes = Math.round((estimatedDepTime - depTime) / 60000); // difference in min
+            if (delayMinutes > 0) {
+                delayText = delayMinutes + " min";
+            }
+        }
+        // Append the rows to the table
         jQuery("#timeTableDeparture tr:last").after(
             "<tr><td>" + depHours + ":" + depMinutes + timeSuffixDep + ", " + (departure.TrackAtLocation || "") +
-            "</td><td>" + arrivalTime + timeSuffixArr + ", " + arrivalTrack +
-            "</td><td>" + owner +
-            "</td><td><a class='deviation' href='#' data-deviation='" + (departure.OtherInformation || "") +
+            "</td><td>" + arrHours + ":" + arrMinutes + timeSuffixArr + ", " + arrTrack +
+            "</td><td>" + owner + " " + departure.AdvertisedTrainIdent +
+            "</td><td><a class='deviation' href='#' data-deviation='" + (departure.OtherInformation || "") + (departure.Canceled || "") + delayText +
             "'>" + (departure.Deviation || "") + "</a></tr>"
         );
     });
