@@ -204,7 +204,6 @@ function fillSearchWidget(data) {
 function Search() {
     var fromSign = $("#from").data("sign");
     var toSign = $("#to").data("sign");
-    console.log(toSign);
     $('#timeTableDeparture tr:not(:first)').remove();
     $('#loader').show();
     var xmlRequest = "<REQUEST>" +
