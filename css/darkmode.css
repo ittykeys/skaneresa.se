@@ -81,10 +81,10 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    margin-right: 3em;
+    margin-left: 3em;
     position: absolute;
     top: 1em;
-    right: 1em;
+    left: 1em;
     width: 3em;
     height: 1.7em;
     background-color: #00000000;
@@ -95,7 +95,7 @@
 .switch {
     position: absolute;
     top: 1em;
-    right: 1em;
+    left: 1em;
     width: 3em;
     height: 1.7em;
     background-color: #00000000;
