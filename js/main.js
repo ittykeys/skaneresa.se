@@ -208,14 +208,14 @@ function Search() {
     $('#loader').show();
     var xmlRequest = "<REQUEST>" +
         "<LOGIN authenticationkey='" + apiKey + "'/>" +
-            "<QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1'>" +
+            "<QUERY objecttype='TrainAnnouncement' namespace='rail.trafficinfo' orderby='AdvertisedTimeAtLocation' schemaversion='2.0'>" +
                 "<FILTER>" +
                     "<AND>" +
                         "<GT name='AdvertisedTimeAtLocation' value='$dateadd(-00:15:00)' />" +
                         "<LT name='AdvertisedTimeAtLocation' value='$dateadd(14:00:00)' />" +
                         "<EQ name='LocationSignature' value='" + fromSign + "' />" +
                         "<EQ name='ActivityType' value='Avgang' />" +
-                        "<IN name='ToLocation' value='" + toSign + "' />" +
+                        "<IN name='ViaToLocation.LocationName' value='" + toSign + "' />" +
                     "</AND>" +
                 "<NOT>"+
                     "<EQ name='InformationOwner' value='SJ' />" +
@@ -228,7 +228,7 @@ function Search() {
                 "<INCLUDE>OtherInformation</INCLUDE>" +
                 "<INCLUDE>AdvertisedTrainIdent</INCLUDE>" +
             "</QUERY>" +
-            "<QUERY objecttype='TrainAnnouncement' orderby='AdvertisedTimeAtLocation' schemaversion='1'>" +
+            "<QUERY objecttype='TrainAnnouncement' namespace='rail.trafficinfo' orderby='AdvertisedTimeAtLocation' schemaversion='2.0'>" +
                 "<FILTER>" +
                     "<AND>" +
                         "<GT name='AdvertisedTimeAtLocation' value='$now' />" +
@@ -328,7 +328,8 @@ function renderTrainAnnouncement(departures, arrivals) {
         var delayText = "";
         if (departure.EstimatedTimeIsPreliminary) {
             var estimatedDepTime = new Date(departure.EstimatedTimeAtLocation);
-            var delayMinutes = Math.round((estimatedDepTime - depTime) / 60000); // difference in min
+            //var delayMinutes = Math.round((estimatedDepTime - depTime) / 60000); // difference in min
+            var delayMinutes = Math.round((estimatedDepTime - departureTime) / 60000);
             if (delayMinutes > 0) {
                 delayText = delayMinutes + " min";
             }
