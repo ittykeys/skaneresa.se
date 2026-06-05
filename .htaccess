@@ -42,6 +42,8 @@ RewriteRule ^en$ /index_en.html [L]
 RewriteRule ^$ /index.html [L]
 RewriteRule ^notification.js$ /js/notification_sv.js [L]
 
+RewriteRule ^nullstate$ /php/nullstate.php [L]
+
 #And block access to config.json
 <Files "config.json">
     RewriteEngine On

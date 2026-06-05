@@ -81,6 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.error("Element with ID 'reset' not found.");
     }
+
+    fetch('nullstate');
 });
 
 // Stations array
