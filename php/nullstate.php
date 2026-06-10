@@ -2,8 +2,9 @@
     declare(strict_types=1);
     function api_get(string $url, ?string $method = null, array $data = []): string|false {
         $method = strtoupper($method ?? 'GET');
+        $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
         $referer = "https://" . $_SERVER['SERVER_NAME'];
-        $headers = "Accept: application/json\r\n";
+        $headers = "Accept: application/json\r\n" . ($userAgent ? "User-Agent: $userAgent\r\n" : "") . "Referer: $referer\r\n";
         $content = null;
         if (!empty($data)) {
             $url .= (str_contains($url, '?') ? '&' : '?') . http_build_query($data);
